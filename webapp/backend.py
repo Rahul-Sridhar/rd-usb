@@ -200,28 +200,29 @@ class Daemon:
                 else:
                     self.log(json.dumps(data))
                     if data:
-                        import csv
-                        import os.path
-                        filename = "C:\\Users\\saira\\OneDrive\\Desktop\\rd-usb\\data.csv"
-                        if not os.path.isfile(filename):
-                            keys = []
-                            values = []
-                            for key, value in data.items():
-                                keys.append(key)
-                                values.append(value)
+                        if("power" in data):
+                            import csv
+                            import os.path
+                            filename = "C:\\Users\\saira\\OneDrive\\Desktop\\rd-usb\\data.csv"
+                            if not os.path.isfile(filename):
+                                keys = []
+                                values = []
+                                for key, value in data.items():
+                                    keys.append(key)
+                                    values.append(value)
 
-                            with open(filename, "w") as outfile:
-                                csvwriter = csv.writer(outfile)
-                                csvwriter.writerow(keys)
-                                csvwriter.writerow(values)
-                        else:
-                            values = []
-                            for _, value in data.items():
-                                values.append(value)
+                                with open(filename, "w") as outfile:
+                                    csvwriter = csv.writer(outfile)
+                                    csvwriter.writerow(keys)
+                                    csvwriter.writerow(values)
+                            else:
+                                values = []
+                                for _, value in data.items():
+                                    values.append(value)
 
-                            with open(filename, "a") as outfile:
-                                csvwriter = csv.writer(outfile)
-                                csvwriter.writerow(values)
+                                with open(filename, "a") as outfile:
+                                    csvwriter = csv.writer(outfile)
+                                    csvwriter.writerow(values)
                         data["name"] = self.config.read("name")
                         self.update(data)
                     self.storage.store_measurement(data)
